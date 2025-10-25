@@ -1,1 +1,2 @@
-# richard-zhang.github.io
+# Richard Zhang
+## card details lol
