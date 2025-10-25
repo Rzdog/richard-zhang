@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Richard Zhang — Portfolio</title>
+    <style>
+        :root{--bg:#0f1724;--accent:#06b6d4;--text:#e6eef3}
+        *{box-sizing:border-box}
+        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+        .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
+        .container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem}
+        .brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.125rem}
+        .primary-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
+        .primary-nav a{color:var(--text);text-decoration:none;padding:0.45rem 0.6rem;border-radius:6px;transition:background .15s,color .15s}
+        .primary-nav a:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
+        .nav-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:0.35rem 0.6rem;border-radius:6px;font-size:1rem}
+        @media (max-width:720px){
+            .nav-toggle{display:block}
+            .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
+            .primary-nav.open{display:block}
+            .primary-nav ul{flex-direction:column;gap:0.25rem}
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header" role="banner">
+        <div class="container">
+            <a class="brand" href="#">Richard Zhang</a>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">☰</button>
+            <nav id="primary-navigation" class="primary-nav" role="navigation" aria-label="Main navigation">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#resume">Resume</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <script>
+        (function(){
+            const btn = document.querySelector('.nav-toggle');
+            const nav = document.getElementById('primary-navigation');
+            btn.addEventListener('click', () => {
+                const open = nav.classList.toggle('open');
+                btn.setAttribute('aria-expanded', String(open));
+            });
+        })();
+    </script>
+</body>
+</html>
