@@ -1,33 +1,72 @@
 <!doctype html>
+<!-- Document type declaration: tells the browser this is an HTML5 document -->
 <html lang="en">
 <head>
+    <!-- Metadata about the document -->
     <meta charset="utf-8" />
+    <!-- Ensure proper responsive scaling on mobile devices -->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Richard Zhang — Portfolio</title>
+
+    <!-- Internal CSS: styles for the page (variables, layout, responsive rules) -->
     <style>
+        /* CSS variables for easy theme tweaks */
         :root{--bg:#0f1724;--accent:#06b6d4;--text:#e6eef3}
+
+        /* Make box-sizing predictable */
         *{box-sizing:border-box}
+
+        /* Basic body styles: font, colors, and background gradient */
         body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+
+        /* Header styling: semi-transparent, sticky to top, subtle border */
         .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
+
+        /* Container centers content and uses flexbox to space items */
         .container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem}
+
+        /* Brand (site title) styles */
         .brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.125rem}
+
+        /* Primary navigation list layout */
         .primary-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
+
+        /* Links inside nav */
         .primary-nav a{color:var(--text);text-decoration:none;padding:0.45rem 0.6rem;border-radius:6px;transition:background .15s,color .15s}
         .primary-nav a:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
+
+        /* Mobile nav toggle button hidden on wide screens */
         .nav-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:0.35rem 0.6rem;border-radius:6px;font-size:1rem}
+
+        /* Responsive adjustments for small screens */
         @media (max-width:720px){
+            /* Show toggle button on small screens */
             .nav-toggle{display:block}
+            /* Make nav a block that can be shown/hidden under the header */
             .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
+            /* When the .open class is present, display the nav */
             .primary-nav.open{display:block}
+            /* Stack nav items vertically on mobile */
             .primary-nav ul{flex-direction:column;gap:0.25rem}
         }
     </style>
 </head>
 <body>
+    <!-- Site header: contains branding and navigation -->
     <header class="site-header" role="banner">
         <div class="container">
+            <!-- Brand / site title link (typically links back to the top or home) -->
             <a class="brand" href="#">Richard Zhang</a>
+
+            <!--
+                Nav toggle button:
+                - Visible on small screens (shown via CSS media query)
+                - aria-expanded reflects whether the nav is open (updated by JS)
+                - aria-controls points to the nav element it toggles
+            -->
             <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">☰</button>
+
+            <!-- Primary navigation block with links to sections on the page -->
             <nav id="primary-navigation" class="primary-nav" role="navigation" aria-label="Main navigation">
                 <ul>
                     <li><a href="#about">About</a></li>
@@ -39,12 +78,23 @@
         </div>
     </header>
 
+    <!--
+        Small inline script to make the mobile nav toggle work:
+        - Finds the toggle button and the nav element
+        - Adds a click handler that toggles the CSS class "open" on the nav
+        - Updates the button's aria-expanded attribute for accessibility
+    -->
     <script>
         (function(){
+            // Select the toggle button and the navigation element
             const btn = document.querySelector('.nav-toggle');
             const nav = document.getElementById('primary-navigation');
+
+            // Add click listener to toggle the nav open/closed
             btn.addEventListener('click', () => {
+                // Toggle the "open" class on the nav (CSS shows/hides based on this)
                 const open = nav.classList.toggle('open');
+                // Update accessibility attribute to reflect current state
                 btn.setAttribute('aria-expanded', String(open));
             });
         })();
