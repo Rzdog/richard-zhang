@@ -1,59 +1,32 @@
 <!doctype html>
-<!-- Document type declaration: tells the browser this is an HTML5 document -->
 <html lang="en">
 <head>
-    <!-- Metadata about the document -->
     <meta charset="utf-8" />
-    <!-- Ensure proper responsive scaling on mobile devices -->
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Richard Zhang — Portfolio</title>
+    <title>About — Richard Zhang</title>
 
-    <!-- Internal CSS: styles for the page (variables, layout, responsive rules) -->
     <style>
-        /* CSS variables for easy theme tweaks */
         :root{--bg:#0f1724;--accent:#06b6d4;--text:#edf3f7}
-
-        /* Make box-sizing predictable */
         *{box-sizing:border-box}
-
-        /* Basic body styles: font, colors, and background gradient */
         body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
 
-        /* Header styling: semi-transparent, sticky to top, subtle border */
         .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
-
-        /* Container centers content and uses flexbox to space items */
         .container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem}
-
-        /* Brand (site title) styles */
         .brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.125rem}
-
-        /* Primary navigation list layout */
         .primary-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
-
-        /* Links inside nav */
         .primary-nav a{color:var(--text);text-decoration:none;padding:0.45rem 0.6rem;border-radius:6px;transition:background .15s,color .15s}
         .primary-nav a:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
-
-        /* Mobile nav toggle button hidden on wide screens */
         .nav-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:0.35rem 0.6rem;border-radius:6px;font-size:1rem}
-
-        /* Responsive adjustments for small screens */
         @media (max-width:720px){
-            /* Show toggle button on small screens */
             .nav-toggle{display:block}
-            /* Make nav a block that can be shown/hidden under the header */
             .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
-            /* When the .open class is present, display the nav */
             .primary-nav.open{display:block}
-            /* Stack nav items vertically on mobile */
             .primary-nav ul{flex-direction:column;gap:0.25rem}
         }
 
-        /* About section styles: layout, portrait circle, responsive stacking */
+        /* About section styles */
         .about-section{padding:3rem 1rem}
         .about-inner{display:flex;align-items:center;gap:2rem;max-width:1100px;margin:0 auto}
-        /* Increased portrait size on desktop and improved fallback/background */
         .about-portrait{
             flex:0 0 320px;
             width:320px;
@@ -62,76 +35,58 @@
             overflow:hidden;
             box-shadow:0 8px 30px rgba(2,6,23,0.6);
             border:4px solid rgba(255,255,255,0.04);
-            background-color:rgba(2,6,23,0.6); /* visible if image fails to load */
+            background-color:rgba(2,6,23,0.6);
             background-position:center;
             background-size:cover;
         }
-        .about-portrait img{
-            width:100%;
-            height:100%;
-            object-fit:cover;
-            display:block;
-        }
+        .about-portrait img{width:100%;height:100%;object-fit:cover;display:block}
         .about-content{flex:1;min-width:0}
         .about-content h2{margin:0 0 0.5rem;font-size:1.5rem}
         .about-content p{margin:0;color:var(--text);line-height:1.6}
-
-        /* Stack portrait above text on small screens for better UX */
         @media (max-width:720px){
             .about-inner{flex-direction:column;text-align:center;padding:0 0.5rem}
-            /* Slightly smaller on mobile */
             .about-portrait{width:220px;height:220px}
             .about-content p{margin-top:1rem}
         }
     </style>
 </head>
 <body>
-    <!-- Site header: contains branding and navigation -->
     <header class="site-header" role="banner">
         <div class="container">
-            <a class="brand" href="#">Richard Zhang</a>
+            <!-- Brand links back to the homepage -->
+            <a class="brand" href="index.html">Richard Zhang</a>
 
             <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">☰</button>
 
             <nav id="primary-navigation" class="primary-nav" role="navigation" aria-label="Main navigation">
                 <ul>
                     <li><a href="about.html">About</a></li>
-                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="index.html#projects">Projects</a></li>
                     <li><a href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="index.html#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!--
-        Small inline script to make the mobile nav toggle work:
-        - Finds the toggle button and the nav element
-        - Adds a click handler that toggles the CSS class "open" on the nav
-        - Updates the button's aria-expanded attribute for accessibility
-    -->
     <script>
         (function(){
-            // Select the toggle button and the navigation element
             const btn = document.querySelector('.nav-toggle');
             const nav = document.getElementById('primary-navigation');
-
-            // Add click listener to toggle the nav open/closed
+            if (!btn || !nav) return;
             btn.addEventListener('click', () => {
-                // Toggle the "open" class on the nav (CSS shows/hides based on this)
                 const open = nav.classList.toggle('open');
-                // Update accessibility attribute to reflect current state
                 btn.setAttribute('aria-expanded', String(open));
             });
         })();
     </script>
 
-    <!-- About section moved to about.html -->
-    <!--
-        <section id="about" class="about-section" aria-labelledby="about-heading">
+    <!-- About page content: portrait + bio -->
+    <section id="about" class="about-section" aria-labelledby="about-heading">
         <div class="about-inner">
             <div class="about-portrait" aria-hidden="true">
-                <img src="./images/about/portrait.jpg" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
+                <!-- relative path to the image within the project -->
+                <img src="./images/about/portrait.JPG" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
             </div>
 
             <div class="about-content">
@@ -144,9 +99,6 @@
             </div>
         </div>
     </section>
-    -->
-
-    <!-- Add your projects, resume, and contact sections here -->
 
 </body>
 </html>
