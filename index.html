@@ -53,9 +53,25 @@
         /* About section styles: layout, portrait circle, responsive stacking */
         .about-section{padding:3rem 1rem}
         .about-inner{display:flex;align-items:center;gap:2rem;max-width:1100px;margin:0 auto}
-        /* Increased portrait size on desktop */
-        .about-portrait{flex:0 0 240px;width:240px;height:240px;border-radius:50%;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:4px solid rgba(255,255,255,0.04)}
-        .about-portrait img{width:100%;height:100%;object-fit:cover;display:block}
+        /* Increased portrait size on desktop and improved fallback/background */
+        .about-portrait{
+            flex:0 0 320px;
+            width:320px;
+            height:320px;
+            border-radius:50%;
+            overflow:hidden;
+            box-shadow:0 8px 30px rgba(2,6,23,0.6);
+            border:4px solid rgba(255,255,255,0.04);
+            background-color:rgba(2,6,23,0.6); /* visible if image fails to load */
+            background-position:center;
+            background-size:cover;
+        }
+        .about-portrait img{
+            width:100%;
+            height:100%;
+            object-fit:cover;
+            display:block;
+        }
         .about-content{flex:1;min-width:0}
         .about-content h2{margin:0 0 0.5rem;font-size:1.5rem}
         .about-content p{margin:0;color:var(--text);line-height:1.6}
@@ -64,7 +80,7 @@
         @media (max-width:720px){
             .about-inner{flex-direction:column;text-align:center;padding:0 0.5rem}
             /* Slightly smaller on mobile */
-            .about-portrait{width:180px;height:180px}
+            .about-portrait{width:220px;height:220px}
             .about-content p{margin-top:1rem}
         }
     </style>
@@ -76,12 +92,6 @@
             <!-- Brand / site title link (typically links back to the top or home) -->
             <a class="brand" href="#">Richard Zhang</a>
 
-            <!--
-                Nav toggle button:
-                - Visible on small screens (shown via CSS media query)
-                - aria-expanded reflects whether the nav is open (updated by JS)
-                - aria-controls points to the nav element it toggles
-            -->
             <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">☰</button>
 
             <!-- Primary navigation block with links to sections on the page -->
@@ -89,7 +99,10 @@
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#projects">Projects</a></li>
-                    <li><a href="#resume">Resume</a></li>
+                    <!-- Resume now links directly to a file named `resume.pdf` in the project root.
+                         Put your resume file at c:\Users\richa\Documents\Portfolio\richard-zhang\resume.pdf
+                         The link opens in a new tab and uses noopener for security. -->
+                    <li><a href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
@@ -122,9 +135,11 @@
     <section id="about" class="about-section" aria-labelledby="about-heading">
         <div class="about-inner">
             <div class="about-portrait" aria-hidden="true">
-                <!-- Use a relative path (no leading slash) so the image loads correctly when opened locally.
-                     Added lazy loading attribute. -->
-                <img src="images/about/portrait.jpg" alt="Richard Zhang" loading="lazy">
+                <!-- Use a local relative path and include width/height for layout stability.
+                     decoding="async" helps rendering; loading="lazy" defers offscreen load.
+                     If this still doesn't display, confirm the file exists at:
+                     c:\Users\richa\Documents\Portfolio\richard-zhang\images\about\portrait.jpg -->
+                <img src="./images/about/portrait.jpg" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
             </div>
 
             <div class="about-content">
