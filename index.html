@@ -49,6 +49,22 @@
             /* Stack nav items vertically on mobile */
             .primary-nav ul{flex-direction:column;gap:0.25rem}
         }
+
+        /* About section styles: layout, portrait circle, responsive stacking */
+        .about-section{padding:3rem 1rem}
+        .about-inner{display:flex;align-items:center;gap:2rem;max-width:1100px;margin:0 auto}
+        .about-portrait{flex:0 0 180px;width:180px;height:180px;border-radius:50%;overflow:hidden;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:4px solid rgba(255,255,255,0.04)}
+        .about-portrait img{width:100%;height:100%;object-fit:cover;display:block}
+        .about-content{flex:1;min-width:0}
+        .about-content h2{margin:0 0 0.5rem;font-size:1.5rem}
+        .about-content p{margin:0;color:var(--text);line-height:1.6}
+
+        /* Stack portrait above text on small screens for better UX */
+        @media (max-width:720px){
+            .about-inner{flex-direction:column;text-align:center;padding:0 0.5rem}
+            .about-portrait{width:140px;height:140px}
+            .about-content p{margin-top:1rem}
+        }
     </style>
 </head>
 <body>
@@ -99,5 +115,26 @@
             });
         })();
     </script>
+
+    <!-- About section: circular portrait on the left, bio on the right -->
+    <section id="about" class="about-section" aria-labelledby="about-heading">
+        <div class="about-inner">
+            <div class="about-portrait" aria-hidden="true">
+                <img src="/images/about/portrait.jpg" alt="Richard Zhang">
+            </div>
+
+            <div class="about-content">
+                <h2 id="about-heading">About</h2>
+                <p>
+                    Hi — I'm Richard. I'm a software developer who builds clean, accessible web
+                    experiences. I enjoy working on frontend interfaces and translating designs
+                    into responsive, performant websites. (Replace this with your short bio.)
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Add your projects, resume, and contact sections here -->
+
 </body>
 </html>
