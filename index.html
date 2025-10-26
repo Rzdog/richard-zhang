@@ -83,6 +83,39 @@
             .about-portrait{width:220px;height:220px}
             .about-content p{margin-top:1rem}
         }
+
+        /* Large landing/banner hero using your image */
+        .hero{
+            width:100%;
+            /* make the hero fill the viewport below the header (approx header height 64px) */
+            min-height:calc(100vh - 64px);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            text-align:center;
+            color:var(--text);
+            /* overlay a subtle dark gradient over the image for legibility */
+            background:
+                linear-gradient(rgba(2,6,23,0.45), rgba(2,6,23,0.45)),
+                url("./images/landing page/frc robot.jpg");
+            background-size:cover;
+            background-position:center;
+        }
+
+        /* Optional large title in the center of the banner */
+        .hero-title{
+            max-width:1100px;
+            padding:2rem;
+            font-size:clamp(1.25rem, 3.5vw, 2.5rem);
+            font-weight:700;
+            letter-spacing:0.01em;
+        }
+
+        /* Ensure the hero stacks nicely on small screens */
+        @media (max-width:720px){
+            .hero{min-height:50vh;background-position:top}
+            .hero-title{padding:1rem}
+        }
     </style>
 </head>
 <body>
@@ -103,6 +136,17 @@
             </nav>
         </div>
     </header>
+
+    <!-- Landing banner: full-width image from your landing page folder -->
+    <section class="hero" role="img" aria-label="Landing banner">
+        <div class="hero-title">
+            <!-- Replace or remove this text as desired -->
+            <div>Richard Zhang</div>
+            <div style="opacity:0.85;font-weight:400;margin-top:0.5rem;font-size:clamp(0.95rem,2.5vw,1.125rem)">
+                Software developer — building clean, accessible web experiences
+            </div>
+        </div>
+    </section>
 
     <!--
         Small inline script to make the mobile nav toggle work:
@@ -126,27 +170,7 @@
         })();
     </script>
 
-    <!-- About section moved to about.html -->
-    <!--
-        <section id="about" class="about-section" aria-labelledby="about-heading">
-        <div class="about-inner">
-            <div class="about-portrait" aria-hidden="true">
-                <img src="./images/about/portrait.jpg" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
-            </div>
 
-            <div class="about-content">
-                <h2 id="about-heading">About</h2>
-                <p>
-                    Hi — I'm Richard. I'm a software developer who builds clean, accessible web
-                    experiences. I enjoy working on frontend interfaces and translating designs
-                    into responsive, performant websites. (Replace this with your short bio.)
-                </p>
-            </div>
-        </div>
-    </section>
-    -->
-
-    <!-- Add your projects, resume, and contact sections here -->
 
 </body>
 </html>
