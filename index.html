@@ -147,24 +147,30 @@
                     <li><a href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Landing banner: full-width image from your landing page folder -->
-    <section class="hero" role="img" aria-label="Landing banner">
-        <div class="hero-title">
-            <!-- Replace or remove this text as desired -->
-            <div>Richard Zhang</div>
-            <div style="opacity:0.85;font-weight:400;margin-top:0.5rem;font-size:clamp(0.95rem,2.5vw,1.125rem)">
-                Software developer — building clean, accessible web experiences
             </div>
-        </div>
-    </section>
+            </header>
 
-    <!--
-        Small inline script to make the mobile nav toggle work:
-        - Finds the toggle button and the nav element
+            <!-- Landing banner: full-width image from your landing page folder -->
+            <section class="hero" role="img" aria-label="Landing banner">
+            <div class="hero-title">
+                <!-- To adjust the main title position:
+                 1. Modify 'left:6%' in .hero-title CSS to move left/right
+                 2. Change 'top:50%' to move up/down
+                 3. Adjust 'width:33.333%' to change text container width -->
+                <div>Richard Zhang</div>
+                <!-- To adjust the subtitle position and appearance:
+                 1. Modify 'margin-top:0.5rem' to change spacing below title
+                 2. Adjust 'opacity:0.85' for text transparency
+                 3. Change font sizes in 'clamp()' function -->
+                <div style="opacity:0.85;font-weight:400;margin-top:0.5rem;font-size:clamp(0.95rem,2.5vw,1.125rem)">
+                Software developer — building clean, accessible web experiences
+                </div>
+            </div>
+            </section>
+
+            <!--
+            Small inline script to make the mobile nav toggle work:
+            - Finds the toggle button and the nav element
         - Adds a click handler that toggles the CSS class "open" on the nav
         - Updates the button's aria-expanded attribute for accessibility
     -->
