@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Projects — Richard Zhang</title>
+
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--muted:#c7d2da;--accent:#06b6d4;--text:#edf3f7}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+
+    /* Header (matches your other pages) */
+    .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
+    .container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem}
+    .brand{font-weight:700;color:var(--text);text-decoration:none;font-size:1.125rem}
+    .primary-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1rem}
+    .primary-nav a{color:var(--text);text-decoration:none;padding:0.45rem 0.6rem;border-radius:6px;transition:background .15s,color .15s}
+    .primary-nav a:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
+    .nav-toggle{display:none;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:0.35rem 0.6rem;border-radius:6px;font-size:1rem}
+    @media (max-width:720px){ .nav-toggle{display:block} .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none} .primary-nav.open{display:block} .primary-nav ul{flex-direction:column;gap:0.25rem} }
+
+    /* Page layout */
+    main{max-width:1100px;margin:2.5rem auto;padding:0 1rem}
+    h1{font-size:2rem;text-align:center;margin:0 0 1.75rem}
+
+    /* Grid: three columns on wide, 2 on tablet, 1 on phone */
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    @media (max-width:1000px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .projects-grid{grid-template-columns:1fr} }
+
+    /* Card */
+    .project-card{background:var(--card);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
+    .project-figure{height:160px;background:#08101a;display:block;overflow:hidden}
+    .project-figure img{width:100%;height:100%;object-fit:cover;display:block}
+    .project-body{padding:1rem;flex:1;display:flex;flex-direction:column}
+    .project-title{font-weight:700;margin:0 0 0.5rem}
+    .project-desc{color:var(--muted);font-size:0.95rem;line-height:1.5;margin:0 0 1rem;flex:1;overflow:hidden}
+
+    /* Buttons row */
+    .project-actions{display:flex;gap:0.5rem;margin-top:1rem}
+    .btn{display:inline-block;padding:0.5rem 0.75rem;border-radius:6px;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text);transition:background .12s, color .12s}
+    .btn:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
+    .btn-primary{background:var(--accent);color:#042023;border:none}
+    .btn-primary:hover{filter:brightness(.95)}
+  </style>
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a class="brand" href="index.html">Richard Zhang</a>
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label="Toggle navigation">☰</button>
+      <nav id="primary-navigation" class="primary-nav" role="navigation" aria-label="Main navigation">
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="project.html" aria-current="page">Projects</a></li>
+          <li><a href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Ongoing Projects</h1>
+
+    <section class="projects-grid" aria-label="Projects list">
+      <!-- Project card 1 -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <!-- replace the src with your project image path -->
+          <img src="./images/projects/project1.jpg" alt="Project 1 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">aiko. translations</h2>
+          <p class="project-desc">Short description of the project — what it does and why it matters. Keep to 1–2 sentences.</p>
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/hatchery" target="_blank" rel="noopener">Hatchery profile</a>
+            <a class="btn" href="https://example.com/news" target="_blank" rel="noopener">News</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project card 2 -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/project2.jpg" alt="Project 2 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Plane n' Simple</h2>
+          <p class="project-desc">Brief summary of goals (aero, electronics, control). Add a couple lines describing the scope and current status.</p>
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/details" target="_blank" rel="noopener">Details</a>
+            <a class="btn btn-primary" href="https://example.com/repo" target="_blank" rel="noopener">Repo</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project card 3 -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/project3.jpg" alt="Project 3 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Traffic Light Controller</h2>
+          <p class="project-desc">Short description: mesh LoRa, remote control of traffic signals, built for competitions and real deployments.</p>
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/readme" target="_blank" rel="noopener">Read more</a>
+            <a class="btn" href="https://example.com/gallery" target="_blank" rel="noopener">Gallery</a>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const btn = document.querySelector('.nav-toggle');
+      const nav = document.getElementById('primary-navigation');
+      if (!btn || !nav) return;
+      btn.addEventListener('click', () => {
+        const open = nav.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    })();
+  </script>
+</body>
+</html>
