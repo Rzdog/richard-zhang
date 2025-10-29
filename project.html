@@ -24,20 +24,76 @@
     main{max-width:1100px;margin:2.5rem auto;padding:0 1rem}
     h1{font-size:2rem;text-align:center;margin:0 0 1.75rem}
 
-    /* Grid: three columns on wide, 2 on tablet, 1 on phone */
-    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-    @media (max-width:1000px){ .projects-grid{grid-template-columns:repeat(2,1fr)} }
-    @media (max-width:640px){ .projects-grid{grid-template-columns:1fr} }
+    /* Layout that centers rows when fewer cards are present:
+       - Use flex so cards keep a sensible base width (320px) and wrap.
+       - When a row isn't full (1 or 2 cards), justify-content:center keeps them centered.
+       - On very small screens cards will shrink via max-width and stack. */
+    .projects-grid{
+      display:flex;
+      flex-wrap:wrap;
+      gap:1.5rem;
+      justify-content:center; /* centers cards when a row isn't full */
+      align-items:flex-start;
+      padding:0;
+    }
+
+    /* Each card keeps a consistent base size but can shrink on small screens */
+    .project-card{
+      flex: 0 1 320px;        /* don't grow, can shrink, base width 320px */
+      width: 320px;           /* preferred width */
+      max-width: calc(100% - 2rem); /* avoid overflow on tiny viewports */
+      background:var(--card);
+      border-radius:8px;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      box-shadow:0 8px 30px rgba(2,6,23,0.6);
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    /* Tablet: allow slightly narrower base so two fit comfortably */
+    @media (max-width:1000px){
+      .project-card{ flex-basis: 300px; width:300px; }
+    }
+
+    /* Mobile: single column, stretch to full width */
+    @media (max-width:640px){
+      .projects-grid{ justify-content:stretch; }
+      .project-card{ flex-basis: 100%; width:100%; max-width:100%; }
+    }
 
     /* Card */
     .project-card{background:var(--card);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .project-figure{height:160px;background:#08101a;display:block;overflow:hidden}
-    .project-figure img{width:100%;height:100%;object-fit:cover;display:block}
-    .project-body{padding:1rem;flex:1;display:flex;flex-direction:column}
-    .project-title{font-weight:700;margin:0 0 0.5rem}
-    .project-desc{color:var(--muted);font-size:0.95rem;line-height:1.5;margin:0 0 1rem;flex:1;overflow:hidden}
+    /* Make the image area larger and responsive.
+       Uses aspect-ratio so the image scales while filling the card edge-to-edge.
+       overflow:hidden + border-radius on .project-card keep rounded corners. */
+    .project-figure{
+      width:100%;
+      aspect-ratio: 16/9;
+      min-height:180px;
+      background:#08101a;
+      display:block;
+      overflow:hidden;
 
-    /* Buttons row */
+      /* REMOVE default browser spacing and make the figure match the card edges */
+      margin:0;                 /* remove default <figure> margin */
+      border-radius: inherit;   /* match the card's rounded corners */
+    }
+    .project-figure img{
+      /* ensure the image truly fills the figure with no gaps */
+      display:block;            /* remove inline gap under images */
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      object-position:center;
+      /* ensure the rounded corners clip the image on older browsers */
+      border-radius: inherit;
+    }
+     .project-body{padding:1rem;flex:1;display:flex;flex-direction:column}
+     .project-title{font-weight:700;margin:0 0 0.5rem}
+     .project-desc{color:var(--muted);font-size:0.95rem;line-height:1.5;margin:0 0 1rem;flex:1;overflow:hidden}
+
+    /* Buttons row (styles kept for future use) */
     .project-actions{display:flex;gap:0.5rem;margin-top:1rem}
     .btn{display:inline-block;padding:0.5rem 0.75rem;border-radius:6px;text-decoration:none;font-weight:600;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text);transition:background .12s, color .12s}
     .btn:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
@@ -73,10 +129,14 @@
         <div class="project-body">
           <h2 class="project-title">Project 1</h2>
           <p class="project-desc">Short description of the project — what it does and why it matters. Keep to 1–2 sentences.</p>
+
+          <!-- Project actions template (currently hidden).
+               To re-enable buttons later, uncomment the block below and update links/labels.
           <div class="project-actions">
-            <a class="btn" href="https://example.com" target="_blank" rel="noopener">Buttom Label</a>
-            <a class="btn" href="https://example.com" target="_blank" rel="noopener">Another button</a>
+            <a class="btn" href="https://example.com" target="_blank" rel="noopener">Button Label</a>
+            <a class="btn btn-primary" href="https://example.com" target="_blank" rel="noopener">Primary</a>
           </div>
+          -->
         </div>
       </article>
 
@@ -88,25 +148,128 @@
         <div class="project-body">
           <h2 class="project-title">Project 2</h2>
           <p class="project-desc">Brief summary of whatever!</p>
+
+          <!-- Project actions template (currently hidden).
+               To re-enable buttons later, uncomment the block below and update links/labels.
           <div class="project-actions">
             <a class="btn" href="https://example.com/details" target="_blank" rel="noopener">Details</a>
             <a class="btn btn-primary" href="https://example.com/repo" target="_blank" rel="noopener">Repo</a>
           </div>
+          -->
+        </div>
+      </article>
+    </section>
+
+    <!-- Completed Projects (same layout as Ongoing Projects) -->
+    <h1 style="margin-top:2.5rem">Completed Projects</h1>
+
+    <section class="projects-grid" aria-label="Completed projects">
+      <!-- Completed Project card A -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/completed/frc robot cropped.jpg" alt="Completed Project 1 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">FIRST Robotics Competition</h2>
+          <p class="project-desc">One-sentence summary of what this completed project was and its impact.</p>
+
+          <!-- Project actions template (currently hidden).
+               To re-enable buttons later, uncomment the block below and update links/labels.
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/case-study" target="_blank" rel="noopener">Case study</a>
+            <a class="btn" href="https://example.com/post" target="_blank" rel="noopener">Write-up</a>
+          </div>
+          -->
         </div>
       </article>
 
-      <!-- Project card 3 -->
+      <!-- Completed Project card B -->
       <article class="project-card">
         <figure class="project-figure" aria-hidden="true">
-          <img src="./images/projects/project3.jpg" alt="Project 3 screenshot">
+          <img src="./images/projects/completed2.jpg" alt="Completed Project 2 screenshot">
         </figure>
         <div class="project-body">
-          <h2 class="project-title">Project 3</h2>
-          <p class="project-desc">Short description: Something something, competitions, engineering good.</p>
+          <h2 class="project-title">Completed Project B</h2>
+          <p class="project-desc">Short description of the project and outcomes; keep it concise.</p>
+
+          <!-- Project actions template (currently hidden).
           <div class="project-actions">
-            <a class="btn" href="https://example.com/readme" target="_blank" rel="noopener">Read more</a>
-            <a class="btn" href="https://example.com/gallery" target="_blank" rel="noopener">Gallery</a>
+            <a class="btn btn-primary" href="https://github.com/example/project-b" target="_blank" rel="noopener">Repo</a>
+            <a class="btn" href="https://example.com/gallery-b" target="_blank" rel="noopener">Gallery</a>
           </div>
+          -->
+        </div>
+      </article>
+
+      <!-- Completed Project card C -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/completed3.jpg" alt="Completed Project 3 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Completed Project C</h2>
+          <p class="project-desc">Brief note about technologies used and the final deliverable.</p>
+
+          <!-- Project actions template (currently hidden).
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/readme-c" target="_blank" rel="noopener">Read more</a>
+            <a class="btn" href="https://example.com/download-c" target="_blank" rel="noopener">Download</a>
+          </div>
+          -->
+        </div>
+      </article>
+
+      <!-- Added: Completed Project D -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/completed4.jpg" alt="Completed Project 4 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Completed Project D</h2>
+          <p class="project-desc">Short summary of the project — goals, scope, and the final result.</p>
+
+          <!-- Project actions template (currently hidden).
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/project-d" target="_blank" rel="noopener">Details</a>
+            <a class="btn" href="https://example.com/project-d/gallery" target="_blank" rel="noopener">Gallery</a>
+          </div>
+          -->
+        </div>
+      </article>
+
+      <!-- Added: Completed Project E -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/completed5.jpg" alt="Completed Project 5 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Completed Project E</h2>
+          <p class="project-desc">One-line description highlighting impact or tech used.</p>
+
+          <!-- Project actions template (currently hidden).
+          <div class="project-actions">
+            <a class="btn btn-primary" href="https://github.com/example/project-e" target="_blank" rel="noopener">Repo</a>
+            <a class="btn" href="https://example.com/project-e/case-study" target="_blank" rel="noopener">Case study</a>
+          </div>
+          -->
+        </div>
+      </article>
+
+      <!-- Added: Completed Project F -->
+      <article class="project-card">
+        <figure class="project-figure" aria-hidden="true">
+          <img src="./images/projects/completed6.jpg" alt="Completed Project 6 screenshot">
+        </figure>
+        <div class="project-body">
+          <h2 class="project-title">Completed Project F</h2>
+          <p class="project-desc">Concise description; keep to one or two sentences so cards remain uniform.</p>
+
+          <!-- Project actions template (currently hidden).
+          <div class="project-actions">
+            <a class="btn" href="https://example.com/project-f" target="_blank" rel="noopener">Read more</a>
+            <a class="btn" href="https://example.com/project-f/download" target="_blank" rel="noopener">Download</a>
+          </div>
+          -->
         </div>
       </article>
     </section>
