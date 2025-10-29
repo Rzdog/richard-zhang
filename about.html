@@ -24,8 +24,20 @@
             .primary-nav ul{flex-direction:column;gap:0.25rem}
         }
 
-        /* About section styles */
-        .about-section{padding:3rem 1rem}
+        /* Change these variables to move the portrait + text further down the page.
+           Increase the pixel values to push content lower; decrease to bring it up. */
+        :root{
+            --about-offset-desktop: 20px; /* ← change this to move the About content on desktop */
+            --about-offset-mobile: 20px;  /* ← change this to move the About content on small screens */
+        }
+
+        /* About section styles (updated to include top offset) */
+        .about-section{
+            /* original vertical padding preserved, plus the adjustable offset */
+            padding: calc(3rem + var(--about-offset-desktop)) 1rem;
+        }
+
+        /* Keep the rest of your existing about styles the same */
         .about-inner{display:flex;align-items:center;gap:2rem;max-width:1100px;margin:0 auto}
         .about-portrait{
             flex:0 0 320px;
@@ -43,7 +55,10 @@
         .about-content{flex:1;min-width:0}
         .about-content h2{margin:0 0 0.5rem;font-size:1.5rem}
         .about-content p{margin:0;color:var(--text);line-height:1.6}
+
+        /* Mobile: use the mobile offset so spacing is proportionate */
         @media (max-width:720px){
+            .about-section{padding: calc(3rem + var(--about-offset-mobile)) 0.5rem}
             .about-inner{flex-direction:column;text-align:center;padding:0 0.5rem}
             .about-portrait{width:220px;height:220px}
             .about-content p{margin-top:1rem}
@@ -63,7 +78,6 @@
                     <li><a href="about.html">About</a></li>
                     <li><a href="project.html">Projects</a></li>
                     <li><a href="resume.pdf" target="_blank" rel="noopener">Resume</a></li>
-                    <li><a href="index.html#contact">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -90,10 +104,17 @@
             </div>
 
             <div class="about-content">
-                <h2 id="about-heading">About</h2>
+                <h2 id="about-heading">Biography</h2>
                 <p>
-                    Hello! I'm Richard. I'm a student who's passionate about physics and engineering.
-                    I enjoy working on multidisciplinary projects across a variety of technical fields, including competitive robotics.
+                    Hello! I'm Richard. 
+                    <br><br>
+                    I'm a student who dreams of working on the frontier of science and technology.
+                    I'm passionate about innovative engineerin, and I'm always looking to further my skills. 
+                    I enjoy working on multidisciplinary, end-to-end projects across a variety of technical fields: including competitive robotics and EMG prosthetics.
+                    <br><br>
+                    In my free time, I enjoy working in the wood shop, performing on the saxophone, and playing Dungeons and Dragons. 
+                    <br><br>
+                    If you would like to get in touch, feel free to contact me at richard.sh.zhang@gmail.com.
                 </p>
             </div>
         </div>
