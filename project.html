@@ -6,9 +6,21 @@
   <title>Projects — Richard Zhang</title>
 
   <style>
-    :root{--bg:#0f1724;--card:#0b1220;--muted:#c7d2da;--accent:#06b6d4;--text:#edf3f7}
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#c7d2da;
+      --accent:#06b6d4;
+      --text:#edf3f7;
+
+      /* Project card font controls — edit these to change font sizes on project cards */
+      --project-card-font-size: 16px;    /* base font for card body */
+      --project-card-title-size: 1.25rem;/* project title size */
+      --project-card-desc-size: 15px;    /* project description size */
+    }
     *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+    /* ADDED: make page a column flex container so footer sits at bottom when content is short */
+    body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh;display:flex;flex-direction:column}
 
     /* Header (matches your other pages) */
     .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
@@ -21,27 +33,33 @@
     @media (max-width:720px){ .nav-toggle{display:block} .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none} .primary-nav.open{display:block} .primary-nav ul{flex-direction:column;gap:0.25rem} }
 
     /* Page layout */
-    main{max-width:1100px;margin:2.5rem auto;padding:0 1rem}
+    /* Allow the projects area to use more horizontal space so cards can be wider.
+       Increase max-width so the grid can expand on large screens; keep padding for mobile. */
+    main{max-width:1400px;margin:2.5rem auto;padding:0 1rem;flex:1}
+
     h1{font-size:2rem;text-align:center;margin:0 0 1.75rem}
 
-    /* Layout that centers rows when fewer cards are present:
-       - Use flex so cards keep a sensible base width (320px) and wrap.
-       - When a row isn't full (1 or 2 cards), justify-content:center keeps them centered.
-       - On very small screens cards will shrink via max-width and stack. */
+    /* Use flex layout so cards keep a fixed max width (equal to a 3-column card)
+       and are centered as a group when a row has fewer than three cards. */
     .projects-grid{
       display:flex;
       flex-wrap:wrap;
       gap:1.5rem;
-      justify-content:center; /* centers cards when a row isn't full */
+      justify-content:center; /* center the row when it has 1 or 2 cards */
       align-items:flex-start;
       padding:0;
+      /* align the projects area with main's max-width (1400px) */
+      max-width: min(1400px, 100%);
+      margin: 0 auto;
     }
 
-    /* Each card keeps a consistent base size but can shrink on small screens */
+    /* Make each card width equal to the width it would have in a 3-column layout
+       based on the same main/container max-width (1400px). This ensures 3-up layout
+       is wider and 1–2 cards stay capped at that width. */
     .project-card{
-      flex: 0 1 320px;        /* don't grow, can shrink, base width 320px */
-      width: 320px;           /* preferred width */
-      max-width: calc(100% - 2rem); /* avoid overflow on tiny viewports */
+      flex: 0 0 calc((min(1400px, 100%) - 3rem) / 3);
+      max-width: calc((min(1400px, 100%) - 3rem) / 3);
+      min-width: 300px; /* prevent becoming too narrow */
       background:var(--card);
       border-radius:8px;
       overflow:hidden;
@@ -49,17 +67,23 @@
       flex-direction:column;
       box-shadow:0 8px 30px rgba(2,6,23,0.6);
       border:1px solid rgba(255,255,255,0.03);
+      min-height:220px;
+      width:100%;
     }
 
-    /* Tablet: allow slightly narrower base so two fit comfortably */
+    /* Tablet: two-column cap (use a smaller container for the calculation) */
     @media (max-width:1000px){
-      .project-card{ flex-basis: 300px; width:300px; }
+      .project-card{
+        flex: 0 0 calc((min(900px, 100%) - 1.5rem) / 2);
+        max-width: calc((min(900px, 100%) - 1.5rem) / 2);
+        min-width: 280px;
+      }
     }
 
-    /* Mobile: single column, stretch to full width */
+    /* Mobile: single column full width */
     @media (max-width:640px){
-      .projects-grid{ justify-content:stretch; }
-      .project-card{ flex-basis: 100%; width:100%; max-width:100%; }
+      .projects-grid{ justify-content:stretch; max-width:100%; }
+      .project-card{ flex-basis: 100%; width:100%; max-width:100%; min-width:0; }
     }
 
     /* Card */
@@ -89,9 +113,26 @@
       /* ensure the rounded corners clip the image on older browsers */
       border-radius: inherit;
     }
-     .project-body{padding:1rem;flex:1;display:flex;flex-direction:column}
-     .project-title{font-weight:700;margin:0 0 0.5rem}
-     .project-desc{color:var(--muted);font-size:0.95rem;line-height:1.5;margin:0 0 1rem;flex:1;overflow:hidden}
+     .project-body{
+       padding:1rem;
+       flex:1;
+       display:flex;
+       flex-direction:column;
+       font-size: var(--project-card-font-size); /* editable site-local card font */
+     }
+     .project-title{
+       font-weight:700;
+       margin:0 0 0.5rem;
+       font-size: var(--project-card-title-size); /* editable title size */
+     }
+     .project-desc{
+       color:var(--muted);
+       font-size: var(--project-card-desc-size); /* editable description size */
+       line-height:1.5;
+       margin:0 0 1rem;
+       flex:1;
+       overflow:hidden;
+     }
 
     /* Buttons row (styles kept for future use) */
     .project-actions{display:flex;gap:0.5rem;margin-top:1rem}
@@ -99,6 +140,15 @@
     .btn:hover{background:rgba(255,255,255,0.03);color:var(--accent)}
     .btn-primary{background:var(--accent);color:#042023;border:none}
     .btn-primary:hover{filter:brightness(.95)}
+
+    /* Footer styles (blank footer) */
+    .site-footer{
+      height:64px;
+      background:rgba(255,255,255,0.02);
+      border-top:1px solid rgba(255,255,255,0.03);
+      display:block;
+      flex:0 0 64px;
+    }
   </style>
 </head>
 <body>
@@ -140,24 +190,7 @@
         </div>
       </article>
 
-      <!-- Project card 2 -->
-      <article class="project-card">
-        <figure class="project-figure" aria-hidden="true">
-          <img src="./images/projects/project2.jpg" alt="Project 2 screenshot">
-        </figure>
-        <div class="project-body">
-          <h2 class="project-title">Project 2</h2>
-          <p class="project-desc">Brief summary of whatever!</p>
-
-          <!-- Project actions template (currently hidden).
-               To re-enable buttons later, uncomment the block below and update links/labels.
-          <div class="project-actions">
-            <a class="btn" href="https://example.com/details" target="_blank" rel="noopener">Details</a>
-            <a class="btn btn-primary" href="https://example.com/repo" target="_blank" rel="noopener">Repo</a>
-          </div>
-          -->
-        </div>
-      </article>
+      
     </section>
 
     <!-- Completed Projects (same layout as Ongoing Projects) -->
@@ -167,11 +200,16 @@
       <!-- Completed Project card A -->
       <article class="project-card">
         <figure class="project-figure" aria-hidden="true">
-          <img src="./images/projects/completed/frc robot cropped.jpg" alt="Completed Project 1 screenshot">
+          <img src="./images/projects/completed/frc robot cropped.jpg" alt="FRC Robot Image">
         </figure>
         <div class="project-body">
           <h2 class="project-title">FIRST Robotics Competition</h2>
-          <p class="project-desc">One-sentence summary of what this completed project was and its impact.</p>
+          <p class="project-desc">
+            International competitive robotics program, with thousands of teams competing in annual competitions.
+            <br><br>
+            As co-leader and electrical lead, I worked on mechanical and electrical design components of the robot, including 
+            the automatic launching mechanism, and the CAN signal network for electrical devices.   
+          </p>
 
           <!-- Project actions template (currently hidden).
                To re-enable buttons later, uncomment the block below and update links/labels.
@@ -186,11 +224,15 @@
       <!-- Completed Project card B -->
       <article class="project-card">
         <figure class="project-figure" aria-hidden="true">
-          <img src="./images/projects/completed2.jpg" alt="Completed Project 2 screenshot">
+          <img src="./images/projects/completed/coffee table.jpg" alt="Coffee Table Image">
         </figure>
         <div class="project-body">
-          <h2 class="project-title">Completed Project B</h2>
-          <p class="project-desc">Short description of the project and outcomes; keep it concise.</p>
+          <h2 class="project-title">Custom Coffee Table</h2>
+          <p class="project-desc">
+            A custom-designed, never-before-seen, 5' x 2' live-edge, maple wood coffee table.
+            <br><br>
+            Utilized OnShape CAD software to produce comprehensive parametrized 3D model before manufacturing. 
+          </p>
 
           <!-- Project actions template (currently hidden).
           <div class="project-actions">
@@ -274,6 +316,9 @@
       </article>
     </section>
   </main>
+
+  <!-- Blank footer: edit inside the element to add content later -->
+  <footer class="site-footer" role="contentinfo" aria-label="Footer"></footer>
 
   <script>
     (function(){

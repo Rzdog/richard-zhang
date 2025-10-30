@@ -6,9 +6,32 @@
     <title>About — Richard Zhang</title>
 
     <style>
-        :root{--bg:#0f1724;--accent:#06b6d4;--text:#edf3f7}
+        :root{
+            --bg:#0f1724;
+            --accent:#06b6d4;
+            --text:#edf3f7;
+
+            /* Editable offsets for About content */
+            --about-offset-desktop: 20px; /* ← change this to move the About content on desktop */
+            --about-offset-mobile: 20px;  /* ← change this to move the About content on small screens */
+        }
+
         *{box-sizing:border-box}
-        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+
+        /* Make page a vertical flex container so footer can sit at the bottom.
+           main will grow to fill available space when content is short. */
+        body{
+            margin:0;
+            font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;
+            color:var(--text);
+            background:linear-gradient(180deg,#071229 0%,#071523 100%);
+            min-height:100vh;
+            display:flex;
+            flex-direction:column;
+        }
+
+        /* Allow the page content to expand and push footer to the bottom */
+        main{flex:1; /* grows to fill available vertical space */ }
 
         .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
         .container{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 1rem}
@@ -22,13 +45,6 @@
             .primary-nav{position:absolute;left:0;right:0;top:64px;background:var(--bg);padding:0.75rem 1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
             .primary-nav.open{display:block}
             .primary-nav ul{flex-direction:column;gap:0.25rem}
-        }
-
-        /* Change these variables to move the portrait + text further down the page.
-           Increase the pixel values to push content lower; decrease to bring it up. */
-        :root{
-            --about-offset-desktop: 20px; /* ← change this to move the About content on desktop */
-            --about-offset-mobile: 20px;  /* ← change this to move the About content on small screens */
         }
 
         /* About section styles (updated to include top offset) */
@@ -56,12 +72,33 @@
         .about-content h2{margin:0 0 0.5rem;font-size:1.5rem}
         .about-content p{margin:0;color:var(--text);line-height:1.6}
 
+        /* Keep links the same colour as surrounding text in the About content.
+           Change color:value if you want a different colour; remove text-decoration to hide underline. */
+        .about-content a,
+        .about-content a:visited,
+        .about-content a:hover,
+        .about-content a:active,
+        .about-content a:focus {
+            color: inherit;         /* same colour as surrounding text (var(--text)) */
+            text-decoration: underline; /* keep or set to none if you don't want an underline */
+            outline: none;          /* focus outline preserved by browser unless customized */
+        }
+
         /* Mobile: use the mobile offset so spacing is proportionate */
         @media (max-width:720px){
             .about-section{padding: calc(3rem + var(--about-offset-mobile)) 0.5rem}
             .about-inner{flex-direction:column;text-align:center;padding:0 0.5rem}
             .about-portrait{width:220px;height:220px}
             .about-content p{margin-top:1rem}
+        }
+
+        /* Footer styles: blank area at the bottom of the page.
+           Edit the footer contents inside the <footer> element if you want text/links later. */
+        .site-footer{
+            height:64px;
+            background:rgba(255,255,255,0.02);
+            border-top:1px solid rgba(255,255,255,0.03);
+            display:block;
         }
     </style>
 </head>
@@ -95,30 +132,35 @@
         })();
     </script>
 
-    <!-- About page content: portrait + bio -->
-    <section id="about" class="about-section" aria-labelledby="about-heading">
-        <div class="about-inner">
-            <div class="about-portrait" aria-hidden="true">
-                <!-- relative path to the image within the project -->
-                <img src="./images/about/portrait.JPG" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
-            </div>
+    <!-- Wrap main content so it can expand to push footer down -->
+    <main>
+        <!-- About page content: portrait + bio -->
+        <section id="about" class="about-section" aria-labelledby="about-heading">
+            <div class="about-inner">
+                <div class="about-portrait" aria-hidden="true">
+                    <!-- relative path to the image within the project -->
+                    <img src="./images/about/portrait.JPG" alt="Richard Zhang portrait" width="320" height="320" loading="lazy" decoding="async">
+                </div>
 
-            <div class="about-content">
-                <h2 id="about-heading">Biography</h2>
-                <p>
-                    Hello! I'm Richard. 
-                    <br><br>
-                    I'm a student who dreams of working on the frontier of science and technology.
-                    I'm passionate about innovative engineerin, and I'm always looking to further my skills. 
-                    I enjoy working on multidisciplinary, end-to-end projects across a variety of technical fields: including competitive robotics and EMG prosthetics.
-                    <br><br>
-                    In my free time, I enjoy working in the wood shop, performing on the saxophone, and playing Dungeons and Dragons. 
-                    <br><br>
-                    If you would like to get in touch, feel free to contact me at richard.sh.zhang@gmail.com.
-                </p>
+                <div class="about-content">
+                    <h2 id="about-heading">Biography</h2>
+                    <p>
+                        Hello! I'm Richard. 
+                        <br><br>
+                        I'm a student who dreams of working on the frontier of science and technology.
+                        I'm passionate about innovative engineering, and I'm always looking to further my skills. 
+                        I enjoy working on multidisciplinary, end-to-end projects across a variety of technical fields: including competitive robotics and EMG prosthetics.
+                        <br><br>
+                        In my free time, I enjoy working in the wood shop, performing on the saxophone, and playing Dungeons and Dragons. 
+                        <br><br>
+                        If you would like to get in touch, feel free to contact me at <a href="mailto:richard.sh.zhang@gmail.com">richard.sh.zhang@gmail.com</a>.
+                    </p>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
+    <!-- Blank footer: edit inside the element to add content later -->
+    <footer class="site-footer" role="contentinfo" aria-label="Footer"></footer>
 </body>
 </html>

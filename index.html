@@ -16,8 +16,19 @@
         /* Make box-sizing predictable */
         *{box-sizing:border-box}
 
-        /* Basic body styles: font, colors, and background gradient */
-        body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--text);background:linear-gradient(180deg,#071229 0%,#071523 100%);min-height:100vh}
+        /* Basic body styles: font, colors, and background gradient
+           Updated to use flex layout so the footer can sit at the bottom when page content is short. */
+        body{
+            margin:0;
+            font-family:Inter,system-ui,Segoe UI,Roboto,Helvetica,Arial;
+            color:var(--text);
+            background:linear-gradient(180deg,#071229 0%,#071523 100%);
+            min-height:100vh;
+
+            /* ADDED: make page a column flex container so footer is pinned to bottom */
+            display:flex;
+            flex-direction:column;
+        }
 
         /* Header styling: semi-transparent, sticky to top, subtle border */
         .site-header{background:rgba(255,255,255,0.03);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid rgba(255,255,255,0.04)}
@@ -97,6 +108,10 @@
                 url("./images/landing page/frc robot.jpg");
             background-size:cover;
             background-position:center;
+
+            /* ADDED: allow hero to grow and push footer to bottom when content is short */
+            flex:1 0 auto;
+            display:block;
         }
 
         /* Place the hero text in the left third of the screen */
@@ -130,6 +145,16 @@
                 padding:1rem;
             }
         }
+
+        /* Footer styles: blank area at the bottom of the page.
+           Edit the footer contents in the <footer> element if you want text/links later. */
+        .site-footer{
+            height:64px;
+            background:rgba(255,255,255,0.02);
+            border-top:1px solid rgba(255,255,255,0.03);
+            display:block;
+            flex:0 0 64px; /* prevent shrinking */
+        }
     </style>
 </head>
 <body>
@@ -151,22 +176,13 @@
 
             <!-- Landing banner: full-width image from your landing page folder -->
             <section class="hero" role="img" aria-label="Landing banner">
-            <div class="hero-title">
-                <!-- To adjust the main title position:
-                 1. Modify 'left:6%' in .hero-title CSS to move left/right
-                 2. Change 'top:50%' to move up/down
-                 3. Adjust 'width:33.333%' to change text container width -->
-                <div>
-                Richard Zhang
+                <div class="hero-title">
+                    <!-- Replace or remove this text as desired -->
+                    <div>Richard Zhang</div>
+                    <div style="opacity:0.85;font-weight:400;margin-top:0.5rem;font-size:clamp(0.95rem,2.5vw,1.125rem)">
+                        Software developer — building clean, accessible web experiences
+                    </div>
                 </div>
-                <!-- To adjust the subtitle position and appearance:
-                 1. Modify 'margin-top:0.5rem' to change spacing below title
-                 2. Adjust 'opacity:0.85' for text transparency
-                 3. Change font sizes in 'clamp()' function -->
-                <div style="opacity:0.85;font-weight:400;margin-top:0.5rem;font-size:clamp(0.95rem,2.5vw,1.125rem)">
-                Engineering Physics student at the University of British Columbia.
-                </div>
-            </div>
             </section>
 
             <!--
@@ -191,7 +207,7 @@
         })();
     </script>
 
-
-
+    <!-- Blank footer: edit inside the element to add content later -->
+    <footer class="site-footer" role="contentinfo" aria-label="Footer"></footer>
 </body>
 </html>
